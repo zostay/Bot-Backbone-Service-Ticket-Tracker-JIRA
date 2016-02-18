@@ -61,6 +61,7 @@ sub lookup_issue {
     my ($self, $number) = @_;
     my $jira = JIRA::REST->new($self->uri, $self->username, $self->password);
     my $issue = $jira->GET("/issue/$number");
+    return unless $issue and $issue->{fields}{summary};
     return {
         issue   => $number,
         summary => $issue->{fields}{summary},
